@@ -1,0 +1,10 @@
+//
+// Created by augety on 23-10-8.
+//
+
+#ifndef STM32H750XBH6_7_CACHE_TEST_CALLBACK_H
+#define STM32H750XBH6_7_CACHE_TEST_CALLBACK_H
+
+#include "main.h"
+
+#endif //STM32H750XBH6_7_CACHE_TEST_CALLBACK_H
