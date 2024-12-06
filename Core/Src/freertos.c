@@ -139,17 +139,17 @@ void MX_FREERTOS_Init(void) {
     osThreadDef(defaultTask, StartDefaultTask, osPriorityIdle, 0, 1024);
     defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-    /* definition and creation of Debug_task */
-    osThreadDef(Debug_task, debug_thread, osPriorityNormal, 0, 1024);
-    Debug_taskHandle = osThreadCreate(osThread(Debug_task), NULL);
-
-    /* definition and creation of lvgl_task */
-    osThreadDef(lvgl_task, lvgl_thread, osPriorityLow, 0, 1024);
-    lvgl_taskHandle = osThreadCreate(osThread(lvgl_task), NULL);
-
-    /* definition and creation of flie_task */
-    osThreadDef(flie_task, flie_thread, osPriorityNormal, 0, 1024);
-    flie_taskHandle = osThreadCreate(osThread(flie_task), NULL);
+//    /* definition and creation of Debug_task */
+//    osThreadDef(Debug_task, debug_thread, osPriorityNormal, 0, 1024);
+//    Debug_taskHandle = osThreadCreate(osThread(Debug_task), NULL);
+//
+//    /* definition and creation of lvgl_task */
+//    osThreadDef(lvgl_task, lvgl_thread, osPriorityLow, 0, 1024);
+//    lvgl_taskHandle = osThreadCreate(osThread(lvgl_task), NULL);
+//
+//    /* definition and creation of flie_task */
+//    osThreadDef(flie_task, flie_thread, osPriorityNormal, 0, 1024);
+//    flie_taskHandle = osThreadCreate(osThread(flie_task), NULL);
 
     /* definition and creation of key_task */
     osThreadDef(key_task, key_thread, osPriorityLow, 0, 512);
@@ -165,6 +165,7 @@ void MX_FREERTOS_Init(void) {
 
     /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
+    wifi_init();
     /* USER CODE END RTOS_THREADS */
 
 }
@@ -197,7 +198,6 @@ void StartDefaultTask(void const * argument)
 void debug_thread(void const * argument)
 {
     /* USER CODE BEGIN debug_thread */
-    wifi_init();
     /* Infinite loop */
     for(;;)
     {

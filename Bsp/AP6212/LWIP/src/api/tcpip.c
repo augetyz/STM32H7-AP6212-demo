@@ -49,6 +49,7 @@
 #include "lwip/priv/tcpip_priv.h"
 #include "lwip/sys.h"
 #include "netif/ethernet.h"
+#include "cmsis_os.h"
 
 #define TCPIP_MSG_VAR_REF(name) API_VAR_REF(name)
 #define TCPIP_MSG_VAR_DECLARE(name) API_VAR_DECLARE(struct tcpip_msg, name)
@@ -85,7 +86,7 @@ sys_mutex_t lock_tcpip_core;
  *
  * @param arg unused argument
  */
-static void tcpip_thread(void *arg)
+static void tcpip_thread(const void *arg)
 {
     struct tcpip_msg *msg;
     char quitflag = 0;
@@ -545,8 +546,11 @@ void tcpip_init(tcpip_init_done_fn initfunc, void *arg)
     }
 #endif /* LWIP_TCPIP_CORE_LOCKING */
 
-    tcpip_thread_handle =
-        sys_thread_new(TCPIP_THREAD_NAME, tcpip_thread, NULL, TCPIP_THREAD_STACKSIZE, TCPIP_THREAD_PRIO);
+//    tcpip_thread_handle =
+//        sys_thread_new(TCPIP_THREAD_NAME, tcpip_thread, NULL, TCPIP_THREAD_STACKSIZE, TCPIP_THREAD_PRIO);
+
+    osThreadDef(TCPIP_THREAD_NAME, tcpip_thread, osPriorityIdle, 0, 1024);
+    tcpip_thread_handle = osThreadCreate(osThread(TCPIP_THREAD_NAME), NULL);
 }
 
 void tcpip_deinit(void)
